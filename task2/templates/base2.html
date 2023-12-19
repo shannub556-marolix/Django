@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for details in data %}
+<div>
+    <p>{{details.id}}</p>
+    <p>{{details.Name}}</p>
+    <p>{{details.Email}}</p>
+    <p>{{details.Mobile}}</p>
+    <p>ID registered at {{details.date_and_time}}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>

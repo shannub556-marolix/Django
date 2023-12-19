@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST">
+    {% csrf_token %}
+    <label for="Name">Enter your name:</label><br>
+  <input type="text" id="Name" name="Name" ><br>
+  <label for="Email">Enter you email Adress:</label><br>
+  <input type="text" id="Email" name="Email" ><br><br>
+    <label for="Mobile">Mobile Number:</label><br>
+  <input type="text" id="Mobile" name="Mobile" ><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<h1>Succesfully registered at {{Time}}</h1>
+</body>
+</html>
