@@ -1,9 +1,7 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
-from django.http import JsonResponse
+
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-from .serilizers import Userserilizer
+from .serilizers import Userserilizer,Detailsserilizer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -12,9 +10,13 @@ from rest_framework.authentication import SessionAuthentication,TokenAuthenticat
 from rest_framework.permissions import IsAuthenticated
 
 
+
 @api_view(["POST"])
 def signup(request):
     if request.method=="POST":
+        serilizer1=Detailsserilizer(data=request.data)
+        if serilizer1.is_valid():
+            serilizer1.save()
         serilizer = Userserilizer(data=request.data)
         if serilizer.is_valid():
             serilizer.save()
@@ -22,6 +24,7 @@ def signup(request):
         token = Token.objects.get(user=user)
         serilizer = Userserilizer(user)
         data = {
+            "Note": "User Registration was Sucessful ",
             "details": serilizer.data,
             "token": token.key
         }
@@ -31,7 +34,7 @@ def signup(request):
 
 
 @api_view(['POST','GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
+@authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def login(request):
     if request.method=='POST':
@@ -39,8 +42,9 @@ def login(request):
         if x is not None:
             user=User.objects.get(username=request.data['username'])
             serilizer=Userserilizer(user)
-            token=Token.objects.get(user=user)
+            token,new=Token.objects.get_or_create(user=user)
             data={
+                "Note" : "Token Succesfully Authinticated and login was sucessfull with given creditentails ",
                 'Details': serilizer.data,
                 'token' : token.key
             }
@@ -52,14 +56,7 @@ def login(request):
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def verify(request):
-    return Response('Hello')
-
-# @api_view(["GET"])
-# @authentication_classes([SessionAuthentication, TokenAuthentication])
-# @permission_classes([IsAuthenticated])
-# def logout(request):
-
-#     request.user.auth_token.delete()
-
-#     return Response({"message": "logout was successful"})
+def logout(request):
+    request.user.auth_token.delete()
+    return Response({"Note" : "Authorization was Succesful and token deleted ",
+        "message": "logout was successful"})
