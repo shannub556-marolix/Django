@@ -19,4 +19,6 @@ from .import views
 urlpatterns = [
     path('signup',views.signup),
     path('login',views.login),
+    path('verify',views.verify),
+    path('logout',views.logout),
 ]
