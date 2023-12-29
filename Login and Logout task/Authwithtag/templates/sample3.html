@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hello Welcome to home page </h1>
+<h1>You have Succesfully loggedin</h1>
+<form method="POST" action="http://127.0.0.1:8000/" >
+    {% csrf_token %}
+  <input type="submit" value="Logout">
+</form>
+
+</body>
+</html>
